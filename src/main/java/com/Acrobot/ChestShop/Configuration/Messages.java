@@ -24,6 +24,7 @@ public class Messages {
     @PrecededBySpace
     public static String NO_BUYING_HERE = "You can't buy here!";
     public static String NO_SELLING_HERE = "You can't sell here!";
+    public static String NO_REFUNDING_HERE = "You can't refund here!";
 
     @PrecededBySpace
     public static String NOT_ENOUGH_SPACE_IN_INVENTORY = "You haven't got enough space in inventory!";
