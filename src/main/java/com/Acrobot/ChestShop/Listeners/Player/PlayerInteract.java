@@ -133,6 +133,13 @@ public class PlayerInteract implements Listener {
         Inventory ownerInventory = (ChestShopSign.isAdminShop(sign) ? new AdminInventory() : chest != null ? chest.getInventory() : null);
 
         ItemStack item = MaterialUtil.getItem(material);
+        if(action == buy) {
+            ItemMeta im = item.getItemMeta();
+            ArrayList<String> lores = new ArrayList<String>();
+            lores.add("Bought from: " + owner.getName());
+            im.setLore(lores);
+            item.setItemMeta(im);
+        }
 
         if (item == null || !NumberUtil.isInteger(quantity)) {
             player.sendMessage(Messages.prefix(Messages.INVALID_SHOP_DETECTED));
