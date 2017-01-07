@@ -30,6 +30,7 @@ public class PreTransactionEvent extends Event {
 
     private ItemStack[] items;
     private double price;
+    private double refund;
 
     private TransactionOutcome transactionOutcome = TRANSACTION_SUCCESFUL;
 
@@ -39,6 +40,7 @@ public class PreTransactionEvent extends Event {
 
         this.items = items;
         this.price = price;
+        this.refund = refund;
 
         this.client = client;
         this.owner = owner;
@@ -60,6 +62,13 @@ public class PreTransactionEvent extends Event {
     public double getPrice() {
         return price;
     }
+    
+    /**
+     * @return Total refund of the items
+     */
+    public double getRefund() {
+        return refund;
+    }
 
     /**
      * Sets the price of the items
@@ -68,6 +77,15 @@ public class PreTransactionEvent extends Event {
      */
     public void setPrice(double price) {
         this.price = price;
+    }
+    
+    /**
+     * Sets the refund of the items
+     *
+     * @param refund Refund of the items
+     */
+    public void setRefund(double refund) {
+        this.refund = refund;
     }
 
     /**
