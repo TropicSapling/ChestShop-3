@@ -98,7 +98,8 @@ public class PartialTransactionModule implements Listener {
         ItemStack[] stock = event.getStock();
 
         double price = event.getPrice();
-        double pricePerItem = event.getPrice() / InventoryUtil.countItems(stock);
+        double pricePerItem = price / InventoryUtil.countItems(stock);
+        double refundPerItem = event.getRefund() / InventoryUtil.countItems(stock);
 
         CurrencyAmountEvent currencyAmountEvent = new CurrencyAmountEvent(owner, client.getWorld());
         ChestShop.callEvent(currencyAmountEvent);
@@ -135,13 +136,21 @@ public class PartialTransactionModule implements Listener {
         if (!InventoryUtil.hasItems(stock, event.getClientInventory())) {
             ItemStack[] itemsHad = getItems(stock, event.getClientInventory());
             int posessedItemCount = InventoryUtil.countItems(itemsHad);
-
+            
+            boolean refunded = false;
             if (posessedItemCount <= 0) {
-                event.setCancelled(NOT_ENOUGH_STOCK_IN_INVENTORY);
-                return;
+                ItemStack[] itemsHad = getItems(stockR, event.getClientInventory());
+                int posessedItemCount = InventoryUtil.countItems(itemsHad);
+                
+                if (posessedItemCount <= 0) {
+                    event.setCancelled(NOT_ENOUGH_STOCK_IN_INVENTORY);
+                    return;
+                }
+                
+                refunded = true;
             }
 
-            event.setPrice(pricePerItem * posessedItemCount);
+            event.setPrice((refunded ? refundPerItem : pricePerItem) * posessedItemCount);
             event.setStock(itemsHad);
         }
     }
