@@ -32,7 +32,7 @@ public class PriceChecker implements Listener {
             return;
         }
 
-        if (line.indexOf('B') != line.lastIndexOf('B') || line.indexOf('S') != line.lastIndexOf('S')) {
+        if (line.indexOf('B') != line.lastIndexOf('B') || line.indexOf('S') != line.lastIndexOf('S') || line.indexOf('R') != line.lastIndexOf('R')) {
             event.setOutcome(INVALID_PRICE);
             return;
         }
@@ -62,7 +62,7 @@ public class PriceChecker implements Listener {
     }
 
     private static boolean isInvalid(String part) {
-        char characters[] = {'B', 'S'};
+        char characters[] = {'B', 'S', 'R'};
 
         for (char character : characters) {
             if (part.contains(Character.toString(character))) {
