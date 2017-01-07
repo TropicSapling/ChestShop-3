@@ -11,6 +11,7 @@ public class PriceUtil {
 
     public static final char BUY_INDICATOR = 'b';
     public static final char SELL_INDICATOR = 's';
+    public static final char SELL_INDICATOR = 'r';
 
     /**
      * Gets the price from the text
@@ -67,6 +68,16 @@ public class PriceUtil {
     public static double getSellPrice(String text) {
         return get(text, SELL_INDICATOR);
     }
+    
+    /**
+     * Gets the refund from the text
+     *
+     * @param text Text to check
+     * @return Refund
+     */
+    public static double getRefund(String text) {
+        return get(text, REFUND_INDICATOR);
+    }
 
     /**
      * Tells if there is a buy price
@@ -86,6 +97,16 @@ public class PriceUtil {
      */
     public static boolean hasSellPrice(String text) {
         return hasPrice(text, SELL_INDICATOR);
+    }
+    
+    /**
+     * Tells if there is a refund
+     *
+     * @param text Refund text
+     * @return If there is a refund
+     */
+    public static boolean hasRefund(String text) {
+        return hasPrice(text, REFUND_INDICATOR);
     }
 
     /**
