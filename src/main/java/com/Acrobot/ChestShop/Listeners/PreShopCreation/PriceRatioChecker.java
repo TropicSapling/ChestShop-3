@@ -7,7 +7,9 @@ import org.bukkit.event.Listener;
 
 import static com.Acrobot.Breeze.Utils.PriceUtil.hasBuyPrice;
 import static com.Acrobot.Breeze.Utils.PriceUtil.hasSellPrice;
+import static com.Acrobot.Breeze.Utils.PriceUtil.hasRefund;
 import static com.Acrobot.ChestShop.Events.PreShopCreationEvent.CreationOutcome.SELL_PRICE_HIGHER_THAN_BUY_PRICE;
+import static com.Acrobot.ChestShop.Events.PreShopCreationEvent.CreationOutcome.REFUND_HIGHER_THAN_BUY_PRICE;
 import static com.Acrobot.ChestShop.Signs.ChestShopSign.PRICE_LINE;
 import static org.bukkit.event.EventPriority.HIGH;
 
@@ -22,9 +24,12 @@ public class PriceRatioChecker implements Listener {
 
         double buyPrice = PriceUtil.getBuyPrice(priceLine);
         double sellPrice = PriceUtil.getSellPrice(priceLine);
+        double refund = PriceUtil.getRefund(priceLine);
 
         if (hasBuyPrice(priceLine) && hasSellPrice(priceLine) && sellPrice > buyPrice) {
             event.setOutcome(SELL_PRICE_HIGHER_THAN_BUY_PRICE);
+        } else if(hasBuyPrice(priceLine) && hasRefund(priceLine) && refund > buyPrice) {
+            event.setOutcome(REFUND_HIGHER_THAN_BUY_PRICE);
         }
     }
 }
