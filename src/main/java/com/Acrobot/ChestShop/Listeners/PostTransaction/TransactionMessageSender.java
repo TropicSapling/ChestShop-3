@@ -40,12 +40,7 @@ public class TransactionMessageSender implements Listener {
         String price = Economy.formatBalance(event.getPrice());
 
         if (Properties.SHOW_TRANSACTION_INFORMATION_CLIENT) {
-            String message;
-            if(event.getRefund()) {
-                message = formatMessage(Messages.YOU_REFUNDED_FROM_SHOP, itemName, price);
-            } else {
-                message = formatMessage(Messages.YOU_BOUGHT_FROM_SHOP, itemName, price);
-            }
+            String message = formatMessage(Messages.YOU_BOUGHT_FROM_SHOP, itemName, price);
             message = message.replace("%owner", owner);
 
             player.sendMessage(message);
@@ -68,7 +63,12 @@ public class TransactionMessageSender implements Listener {
         String price = Economy.formatBalance(event.getPrice());
 
         if (Properties.SHOW_TRANSACTION_INFORMATION_CLIENT) {
-            String message = formatMessage(Messages.YOU_SOLD_TO_SHOP, itemName, price);
+            String message;
+            if(event.getRefund() > 0) {
+                message = formatMessage(Messages.YOU_REFUNDED_TO_SHOP, itemName, Economy.formatBalance(event.getRefund()));
+            } else {
+                message = formatMessage(Messages.YOU_SOLD_TO_SHOP, itemName, price);
+            }
             message = message.replace("%buyer", owner);
 
             player.sendMessage(message);
