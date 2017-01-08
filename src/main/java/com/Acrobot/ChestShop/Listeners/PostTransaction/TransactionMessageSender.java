@@ -40,7 +40,12 @@ public class TransactionMessageSender implements Listener {
         String price = Economy.formatBalance(event.getPrice());
 
         if (Properties.SHOW_TRANSACTION_INFORMATION_CLIENT) {
-            String message = formatMessage(Messages.YOU_BOUGHT_FROM_SHOP, itemName, price);
+            String message;
+            if(event.getRefund()) {
+                message = formatMessage(Messages.YOU_REFUNDED_FROM_SHOP, itemName, price);
+            } else {
+                message = formatMessage(Messages.YOU_BOUGHT_FROM_SHOP, itemName, price);
+            }
             message = message.replace("%owner", owner);
 
             player.sendMessage(message);
