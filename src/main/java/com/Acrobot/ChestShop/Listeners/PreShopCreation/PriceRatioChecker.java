@@ -30,6 +30,8 @@ public class PriceRatioChecker implements Listener {
             event.setOutcome(SELL_PRICE_HIGHER_THAN_BUY_PRICE);
         } else if(hasBuyPrice(priceLine) && hasRefund(priceLine) && refund > buyPrice) {
             event.setOutcome(REFUND_HIGHER_THAN_BUY_PRICE);
+        } else if(hasSellPrice(priceLine) && hasRefund(priceLine) && refund > sellPrice) {
+            event.setOutcome(REFUND_HIGHER_THAN_SELL_PRICE);
         }
     }
 }
