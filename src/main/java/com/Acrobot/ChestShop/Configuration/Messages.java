@@ -41,6 +41,7 @@ public class Messages {
 
     @PrecededBySpace
     public static String YOU_SOLD_TO_SHOP = "You sold %item to %buyer for %price.";
+    public static String YOU_REFUNDED_TO_SHOP = "You refunded %item to %buyer for %price.";
     public static String SOMEBODY_SOLD_TO_YOUR_SHOP = "%seller sold %item for %price to you.";
 
     @PrecededBySpace
