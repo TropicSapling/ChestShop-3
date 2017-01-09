@@ -8,8 +8,8 @@ This fork is my attempt at adding refunding & possibly some other features.
 
 TODO
 --------------------------------
-[ ] Test if refund is possible *before* selling instead of after.
-[ ] Make refunds possible even without partial transactions enabled.
+- Test if refund is possible *before* selling instead of after. (Listeners/PreTransaction/PartialTransactionModule.java)
+- Make refunds possible even without partial transactions enabled. (Listeners/PreTransaction/AmountAndPriceChecker.java)
 
 
 Building
