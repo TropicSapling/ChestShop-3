@@ -4,14 +4,12 @@ ChestShop
 ChestShop is an awesome plugin for managing your server's economy. 
 By using chests and signs, you can effectively create your own market!
 
-ChestShop also makes admininstators' lives easier. 
-Simply drag-and-drop the .jar to your "plugins" folder and you're done! 
-
-If you need any help - just ask. There is a ticket system, in which you can report bugs, suggest improvements and more.
-Don't be fooled though - you might think that your ticket disappeared, however that's not the case.   
-You should configure the system to show **"All tickets"**, instead of only **"All open"** - you can do that by clicking on the "Filters".
-
 This fork is my attempt at adding refunding & possibly some other features.
+
+TODO
+--------------------------------
+[ ] Test if refund is possible *before* selling instead of after.
+[ ] Make refunds possible even without partial transactions enabled.
 
 
 Building
