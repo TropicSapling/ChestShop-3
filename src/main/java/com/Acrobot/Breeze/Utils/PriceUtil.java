@@ -11,7 +11,7 @@ public class PriceUtil {
 
     public static final char BUY_INDICATOR = 'b';
     public static final char SELL_INDICATOR = 's';
-    public static final char SELL_INDICATOR = 'r';
+    public static final char REFUND_INDICATOR = 'r';
 
     /**
      * Gets the price from the text
