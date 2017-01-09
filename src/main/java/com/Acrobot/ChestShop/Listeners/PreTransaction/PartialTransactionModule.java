@@ -96,6 +96,12 @@ public class PartialTransactionModule implements Listener {
         Player client = event.getClient();
         UUID owner = event.getOwner().getUniqueId();
         ItemStack[] stock = event.getStock();
+        ItemStack[] stockR = event.getStock();
+        ItemMeta im = stockR.getItemMeta();
+        ArrayList<String> lores = new ArrayList<String>();
+        lores.add("Bought from: " + owner.getName());
+        im.setLore(lores);
+        stockR.setItemMeta(im);
 
         double price = event.getPrice();
         double pricePerItem = price / InventoryUtil.countItems(stock);
