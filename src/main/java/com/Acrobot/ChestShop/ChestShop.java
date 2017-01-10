@@ -36,7 +36,6 @@ import com.Acrobot.ChestShop.Logging.FileFormatter;
 import com.Acrobot.ChestShop.Metadata.ItemDatabase;
 import com.Acrobot.ChestShop.Signs.RestrictedSign;
 import com.Acrobot.ChestShop.UUIDs.NameManager;
-import com.Acrobot.ChestShop.Updater.Updater;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
@@ -111,7 +110,6 @@ public class ChestShop extends JavaPlugin {
         getCommand("cstoggle").setExecutor(new Toggle());
 
         startStatistics();
-        startUpdater();
     }
 
     private void handleMigrations() {
@@ -298,16 +296,6 @@ public class ChestShop extends JavaPlugin {
         } catch (IOException ex) {
             ChestShop.getBukkitLogger().severe("There was an error while submitting statistics.");
         }
-    }
-
-    private static final int PROJECT_BUKKITDEV_ID = 31263;
-
-    private void startUpdater() {
-        if (Properties.TURN_OFF_UPDATES) {
-            return;
-        }
-
-        new Updater(this, PROJECT_BUKKITDEV_ID, this.getFile(), Updater.UpdateType.DEFAULT, true);
     }
 
     ///////////////////////////////////////////////////////////////////////////////
