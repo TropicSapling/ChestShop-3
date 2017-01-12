@@ -64,7 +64,7 @@ public class TransactionMessageSender implements Listener {
 
         if (Properties.SHOW_TRANSACTION_INFORMATION_CLIENT) {
             String message;
-            if(event.getRefund() > 0) {
+            if(event.getRefund() > 0 && event.getPrice() == event.getRefund()) {
                 message = formatMessage(Messages.YOU_REFUNDED_TO_SHOP, itemName, Economy.formatBalance(event.getRefund()));
             } else {
                 message = formatMessage(Messages.YOU_SOLD_TO_SHOP, itemName, price);
