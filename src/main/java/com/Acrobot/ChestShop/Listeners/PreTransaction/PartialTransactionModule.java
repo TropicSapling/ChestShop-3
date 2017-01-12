@@ -104,6 +104,7 @@ public class PartialTransactionModule implements Listener {
         stockR.setItemMeta(im);
 
         double price = event.getPrice();
+        double refund = event.getRefund();
         double pricePerItem = price / InventoryUtil.countItems(stock);
         double refundPerItem = event.getRefund() / InventoryUtil.countItems(stock);
 
@@ -113,19 +114,31 @@ public class PartialTransactionModule implements Listener {
         BigDecimal walletMoney = currencyAmountEvent.getAmount();
 
         if (Economy.isOwnerEconomicallyActive(event.getOwnerInventory())) {
-            CurrencyCheckEvent currencyCheckEvent = new CurrencyCheckEvent(BigDecimal.valueOf(price), owner, client.getWorld());
+            CurrencyCheckEvent currencyCheckEvent = new CurrencyCheckEvent(BigDecimal.valueOf(refund), owner, client.getWorld());
             ChestShop.callEvent(currencyCheckEvent);
 
             if (!currencyCheckEvent.hasEnough()) {
-                int amountAffordable = getAmountOfAffordableItems(walletMoney, pricePerItem);
+                int amountAffordable = getAmountOfAffordableItems(walletMoney, refundPerItem);
 
                 if (amountAffordable < 1) {
-                    event.setCancelled(SHOP_DOES_NOT_HAVE_ENOUGH_MONEY);
-                    return;
+                    CurrencyCheckEvent currencyCheckEvent2 = new CurrencyCheckEvent(BigDecimal.valueOf(price), owner, client.getWorld());
+                    ChestShop.callEvent(currencyCheckEvent2);
+                    
+                    if (!currencyCheckEvent2.hasEnough()) {
+                        int amountAffordable = getAmountOfAffordableItems(walletMoney, pricePerItem);
+                        
+                        if (amountAffordable < 1) {
+                            event.setCancelled(SHOP_DOES_NOT_HAVE_ENOUGH_MONEY);
+                            return;
+                        }
+                        
+                        event.setPrice(amountAffordable * pricePerItem);
+                        event.setStock(getCountedItemStack(stock, amountAffordable));
+                    }
+                } else {
+                    event.setPrice(amountAffordable * refundPerItem);
+                    event.setStock(getCountedItemStack(stockR, amountAffordable));
                 }
-
-                event.setPrice(amountAffordable * pricePerItem);
-                event.setStock(getCountedItemStack(stock, amountAffordable));
             }
         }
 
