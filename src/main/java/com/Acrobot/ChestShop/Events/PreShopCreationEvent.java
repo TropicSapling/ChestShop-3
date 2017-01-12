@@ -144,7 +144,7 @@ public class PreShopCreationEvent extends Event {
 
         SELL_PRICE_HIGHER_THAN_BUY_PRICE,
         REFUND_HIGHER_THAN_BUY_PRICE,
-        REFUND_HIGHER_THAN_SELL_PRICE,
+        REFUND_LOWER_THAN_SELL_PRICE,
 
         NO_CHEST,
 
