@@ -34,6 +34,9 @@ public class ErrorMessageSender implements Listener {
             case SHOP_DOES_NOT_SELL_THIS_ITEM:
                 message = Messages.NO_SELLING_HERE;
                 break;
+            case SHOP_DOES_NOT_REFUND_THIS_ITEM:
+                message = Messages.NO_REFUNDING_HERE;
+                break;
             case CLIENT_DOES_NOT_HAVE_PERMISSION:
                 message = Messages.NO_PERMISSION;
                 break;
