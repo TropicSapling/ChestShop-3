@@ -145,7 +145,7 @@ public class PartialTransactionModule implements Listener {
             
             boolean refunded = false;
             if (posessedItemCount <= 0) {
-                ItemStack[] itemsHad = getItems(stockR, event.getClientInventory());
+                ItemStack[] itemsHad2 = getItems(stockR, event.getClientInventory());
                 int posessedItemCount = InventoryUtil.countItems(itemsHad);
                 
                 if (posessedItemCount <= 0) {
@@ -157,7 +157,7 @@ public class PartialTransactionModule implements Listener {
             }
 
             event.setPrice((refunded ? refundPerItem : pricePerItem) * posessedItemCount);
-            event.setStock(itemsHad);
+            event.setStock(refunded ? itemsHad2 : itemsHad);
         }
     }
 
