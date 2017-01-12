@@ -4,7 +4,7 @@ ChestShop
 ChestShop is an awesome plugin for managing your server's economy. 
 By using chests and signs, you can effectively create your own market!
 
-This fork is my attempt at adding refunding & possibly some other features.
+This fork is my attempt at adding refunding & updating to the latest stable Minecraft version.
 
 TODO
 --------------------------------
