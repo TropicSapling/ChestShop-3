@@ -49,20 +49,37 @@ public class AmountAndPriceChecker implements Listener {
         }
 
         ItemStack[] stock = event.getStock();
+        ItemStack[] stockR = event.getStock();
+        ItemMeta im = stockR.getItemMeta();
+        ArrayList<String> lores = new ArrayList<String>();
+        lores.add("Bought from: " + event.getOwner().getName());
+        im.setLore(lores);
+        stockR.setItemMeta(im);
+        
         Inventory clientInventory = event.getClientInventory();
 
-        CurrencyCheckEvent currencyCheckEvent = new CurrencyCheckEvent(BigDecimal.valueOf(event.getPrice()),
+        CurrencyCheckEvent currencyCheckEvent = new CurrencyCheckEvent(BigDecimal.valueOf(event.getRefund()),
                                                         event.getOwner().getUniqueId(),
                                                         event.getSign().getWorld());
         ChestShop.callEvent(currencyCheckEvent);
-
-        if (!currencyCheckEvent.hasEnough()) {
-            event.setCancelled(SHOP_DOES_NOT_HAVE_ENOUGH_MONEY);
-            return;
-        }
-
-        if (!InventoryUtil.hasItems(stock, clientInventory)) {
-            event.setCancelled(NOT_ENOUGH_STOCK_IN_INVENTORY);
+        
+        if(!currencyCheckEvent.hasEnough() || !InventoryUtil.hasItems(stockR, clientInventory)) {
+            CurrencyCheckEvent currencyCheckEvent2 = new CurrencyCheckEvent(BigDecimal.valueOf(event.getPrice()),
+                                                        event.getOwner().getUniqueId(),
+                                                        event.getSign().getWorld());
+            ChestShop.callEvent(currencyCheckEvent2);
+            
+            if (!currencyCheckEvent.hasEnough()) {
+                event.setCancelled(SHOP_DOES_NOT_HAVE_ENOUGH_MONEY);
+                return;
+            }
+            
+            if (!InventoryUtil.hasItems(stock, clientInventory)) {
+                event.setCancelled(NOT_ENOUGH_STOCK_IN_INVENTORY);
+            }
+        } else {
+            event.setStock(stockR);
+            event.setPrice(event.getRefund());
         }
     }
 }
