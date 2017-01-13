@@ -97,16 +97,20 @@ public class PartialTransactionModule implements Listener {
         UUID owner = event.getOwner().getUniqueId();
         ItemStack[] stock = event.getStock();
         ItemStack[] stockR = event.getStock();
-        ItemMeta im = stockR.getItemMeta();
-        ArrayList<String> lores = new ArrayList<String>();
-        lores.add("Bought from: " + owner.getName());
-        im.setLore(lores);
-        stockR.setItemMeta(im);
+        for(byte slot = 0; slot < stockR.length; slot++) {
+            ItemMeta im = stockR[slot].getItemMeta();
+            ArrayList<String> lores = new ArrayList<String>();
+            lores.add("Bought from: " + owner.getName());
+            im.setLore(lores);
+            stockR[slot].setItemMeta(im);
+        }
 
         double price = event.getPrice();
         double refund = event.getRefund();
         double pricePerItem = price / InventoryUtil.countItems(stock);
         double refundPerItem = event.getRefund() / InventoryUtil.countItems(stock);
+        
+        boolean canRefund = true;
 
         CurrencyAmountEvent currencyAmountEvent = new CurrencyAmountEvent(owner, client.getWorld());
         ChestShop.callEvent(currencyAmountEvent);
@@ -135,6 +139,8 @@ public class PartialTransactionModule implements Listener {
                         event.setPrice(amountAffordable * pricePerItem);
                         event.setStock(getCountedItemStack(stock, amountAffordable));
                     }
+                    
+                    canRefund = false;
                 } else {
                     event.setPrice(amountAffordable * refundPerItem);
                     event.setStock(getCountedItemStack(stockR, amountAffordable));
@@ -144,21 +150,31 @@ public class PartialTransactionModule implements Listener {
 
         stock = event.getStock();
 
-        CurrencyHoldEvent currencyHoldEvent = new CurrencyHoldEvent(BigDecimal.valueOf(price), client);
+        CurrencyHoldEvent currencyHoldEvent = new CurrencyHoldEvent(BigDecimal.valueOf(canRefund ? refund : price), client);
         ChestShop.callEvent(currencyHoldEvent);
 
-        if (!currencyHoldEvent.canHold()) {
+        if (canRefund && !currencyHoldEvent.canHold()) {
+            CurrencyHoldEvent currencyHoldEvent = new CurrencyHoldEvent(BigDecimal.valueOf(price), client);
+            ChestShop.callEvent(currencyHoldEvent);
+            
+            if(!currencyHoldEvent.canHold()) {
+                event.setCancelled(CLIENT_DEPOSIT_FAILED);
+                return;
+            }
+            
+            canRefund = false;
+        } else if(!canRefund && !currencyHoldEvent.canHold()) {
             event.setCancelled(CLIENT_DEPOSIT_FAILED);
             return;
         }
 
         if (!InventoryUtil.hasItems(stock, event.getClientInventory())) {
-            ItemStack[] itemsHad = getItems(stock, event.getClientInventory());
+            ItemStack[] itemsHad = getItems(stockR, event.getClientInventory());
             int posessedItemCount = InventoryUtil.countItems(itemsHad);
             
-            boolean refunded = false;
-            if (posessedItemCount <= 0) {
-                ItemStack[] itemsHad2 = getItems(stockR, event.getClientInventory());
+            boolean refunded = true;
+            if (canRefund && posessedItemCount <= 0) {
+                ItemStack[] itemsHad2 = getItems(stock, event.getClientInventory());
                 int posessedItemCount = InventoryUtil.countItems(itemsHad);
                 
                 if (posessedItemCount <= 0) {
@@ -166,7 +182,10 @@ public class PartialTransactionModule implements Listener {
                     return;
                 }
                 
-                refunded = true;
+                refunded = false;
+            } else if(!canRefund && posessedItemCount <= 0) {
+                event.setCancelled(NOT_ENOUGH_STOCK_IN_INVENTORY);
+                return;
             }
 
             event.setPrice((refunded ? refundPerItem : pricePerItem) * posessedItemCount);
