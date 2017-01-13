@@ -6,12 +6,6 @@ By using chests and signs, you can effectively create your own market!
 
 *This fork is my attempt at adding refunding & updating to the latest stable Minecraft version.*
 
-TODO
---------------------------------
-- Test if refund is possible *before* selling instead of after. (Listeners/PreTransaction/PartialTransactionModule.java)
-- (Fix spacing to not mix tabs and spaces)
-
-
 Building
 --------------------------------
 
