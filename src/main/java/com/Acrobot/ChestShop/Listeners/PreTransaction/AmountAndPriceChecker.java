@@ -50,11 +50,13 @@ public class AmountAndPriceChecker implements Listener {
 
         ItemStack[] stock = event.getStock();
         ItemStack[] stockR = event.getStock();
-        ItemMeta im = stockR.getItemMeta();
-        ArrayList<String> lores = new ArrayList<String>();
-        lores.add("Bought from: " + event.getOwner().getName());
-        im.setLore(lores);
-        stockR.setItemMeta(im);
+        for(byte slot = 0; slot < stockR.length; slot++) {
+            ItemMeta im = stockR[slot].getItemMeta();
+            ArrayList<String> lores = new ArrayList<String>();
+            lores.add("Bought from: " + event.getOwner().getName());
+            im.setLore(lores);
+            stockR[slot].setItemMeta(im);
+        }
         
         Inventory clientInventory = event.getClientInventory();
 
