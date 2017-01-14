@@ -67,7 +67,18 @@ public class AdminInventory implements Inventory {
     public boolean contains(ItemStack itemStack) {
         return true;
     }
+    
+    @Override
+    public ItemStack[] getStorageContents() {
+        return new ItemStack[0];
+    }
 
+    @Override
+    public void setStorageContents(ItemStack[] itemStacks) throws IllegalArgumentException {
+
+    }
+
+    @Override
     public boolean contains(int i, int i1) {
         return true;
     }
