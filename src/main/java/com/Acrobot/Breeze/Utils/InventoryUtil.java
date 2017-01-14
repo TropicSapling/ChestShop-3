@@ -49,7 +49,7 @@ public class InventoryUtil {
      * @return Is the inventory empty?
      */
     public static boolean isEmpty(Inventory inventory) {
-        for (ItemStack stack : inventory.getContents()) {
+        for (ItemStack stack : inventory.getStorageContents()) {
             if (!MaterialUtil.isEmpty(stack)) {
                 return false;
             }
@@ -89,7 +89,7 @@ public class InventoryUtil {
             return true;
         }
 
-        for (ItemStack iStack : inventory.getContents()) {
+        for (ItemStack iStack : inventory.getStorageContents()) {
             if (left <= 0) {
                 return true;
             }
@@ -125,7 +125,7 @@ public class InventoryUtil {
 
         int amountLeft = item.getAmount();
 
-        for (int currentSlot = 0; currentSlot < inventory.getSize() && amountLeft > 0; currentSlot++) {
+        for (int currentSlot = 0; currentSlot < getSizeOf(inventory) && amountLeft > 0; currentSlot++) {
             ItemStack currentItem = inventory.getItem(currentSlot);
             ItemStack duplicate = item.clone();
 
@@ -152,6 +152,11 @@ public class InventoryUtil {
         return amountLeft;
     }
 
+    private static int getSizeOf(Inventory inventory) {
+        return inventory.getStorageContents().length;
+    }
+
+    
     /**
      * Adds an item to the inventor
      *
