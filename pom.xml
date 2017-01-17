@@ -13,6 +13,9 @@
         <connection>scm:git:git://github.com/TropicSapling/ChestShop-3</connection>
         <developerConnection>scm:git:ssh://git@github.com/TropicSapling/ChestShop-3.git</developerConnection>
         <url>https://github.com/TropicSapling/ChestShop-3</url>
+        <connection>scm:git:git://github.com/dmulloy2/ChestShop-3</connection>
+        <developerConnection>scm:git:ssh://git@github.com/dmulloy2/ChestShop-3.git</developerConnection>
+        <url>https://github.com/dmulloy2/ChestShop-3</url>
     </scm>
 
     <repositories>
@@ -237,11 +240,10 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
         <dependency>
-            <groupId>net.t00thpick1</groupId>
-            <artifactId>residence</artifactId>
-            <version>3.0.0q-SNAPSHOT</version>
+            <groupId>com.bekvon.bukkit.residence</groupId>
+            <artifactId>Residence</artifactId>
+            <version>4.5.3.0</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>
