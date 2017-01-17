@@ -172,6 +172,7 @@ public class InventoryUtil {
     {
         return getStorageContents(inventory).length;
     }
+
     /**
      * Adds an item to the inventor
      *

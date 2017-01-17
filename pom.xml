@@ -13,9 +13,6 @@
         <connection>scm:git:git://github.com/TropicSapling/ChestShop-3</connection>
         <developerConnection>scm:git:ssh://git@github.com/TropicSapling/ChestShop-3.git</developerConnection>
         <url>https://github.com/TropicSapling/ChestShop-3</url>
-        <connection>scm:git:git://github.com/dmulloy2/ChestShop-3</connection>
-        <developerConnection>scm:git:ssh://git@github.com/dmulloy2/ChestShop-3.git</developerConnection>
-        <url>https://github.com/dmulloy2/ChestShop-3</url>
     </scm>
 
     <repositories>
@@ -34,10 +31,6 @@
         <repository>
             <id>vault-repo</id>
             <url>http://nexus.hc.to/content/repositories/pub_releases/</url>
-        </repository>
-        <repository>
-            <id>heroes-repo</id>
-            <url>http://nexus.hc.to/content/repositories/pub_snapshots/</url>
         </repository>
         <repository>
             <id>authme-repo</id>
